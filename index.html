@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Open in Claude</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 34rem; margin: 3rem auto; padding: 0 1.25rem; line-height: 1.5; }
+  a { display: inline-block; margin: .4rem .8rem .4rem 0; }
+  #msg { opacity: .7; font-size: .9rem; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h3>Opening Claude Desktop…</h3>
+<p>If nothing happens:
+  <br><a id="desktop" href="claude://claude.ai/new">Open in Claude Desktop</a>
+  <a id="web" href="https://claude.ai/new">Open on the web</a></p>
+<p id="msg"></p>
+<script>
+  // Only ever forwards to Claude's own "new chat" screen; the q text is re-encoded.
+  var q = new URLSearchParams(location.search).get("q") || "";
+  var suffix = q ? "?q=" + encodeURIComponent(q) : "";
+  var desktop = "claude://claude.ai/new" + suffix;
+  var web = "https://claude.ai/new" + suffix;
+  document.getElementById("desktop").href = desktop;
+  document.getElementById("web").href = web;
+  document.getElementById("msg").textContent = q;
+  // Phones have no Claude Desktop, so send them to the web/app link instead.
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    location.replace(web);
+  } else {
+    location.href = desktop;
+  }
+</script>
+</body>
+</html>
